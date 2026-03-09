@@ -1,19 +1,32 @@
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// ─── Points to Express backend for Google OAuth ───
-const BACKEND_URL = "http://localhost:5000";
-
 const LoginPage = () => {
-  const handleGoogleLogin = () => {
-    // Redirect browser to Express Google OAuth route
-    window.location.href = `${BACKEND_URL}/auth/google`;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) navigate("/");
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) navigate("/");
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  const handleGoogleLogin = async () => {
+    await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="flex flex-col items-center gap-10 w-full max-w-sm">
-        {/* Logo & Title */}
         <div className="flex flex-col items-center gap-4">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow shadow-lg shadow-primary/20">
             <Sparkles className="h-7 w-7 text-primary-foreground" />
@@ -26,7 +39,6 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {/* Google Login Button */}
         <Button
           onClick={handleGoogleLogin}
           size="lg"
