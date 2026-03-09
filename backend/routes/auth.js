@@ -54,10 +54,10 @@ router.get(
 
 // ─── Route: Get the currently logged-in user ───
 router.get("/user", (req, res) => {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated && req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {
-    res.status(401).json({ user: null, message: "Not authenticated" });
+    res.json({ user: null });
   }
 });
 

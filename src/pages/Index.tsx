@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { Bot, LogOut, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import ChatMessage from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import { streamChat, type Msg } from "@/lib/streamChat";
+
+// ─── Points to Express backend ───
+const BACKEND_URL = "http://localhost:5000";
 
 const Index = () => {
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -16,18 +18,22 @@ const Index = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  // ─── Check if user is logged in via Express session ───
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ?? null);
-      setChecking(false);
-      if (!session) navigate("/login");
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setChecking(false);
-      if (!session) navigate("/login");
-    });
-    return () => subscription.unsubscribe();
+    fetch(`${BACKEND_URL}/auth/user`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          navigate("/login");
+        }
+        setChecking(false);
+      })
+      .catch(() => {
+        navigate("/login");
+        setChecking(false);
+      });
   }, [navigate]);
 
   useEffect(() => {
@@ -68,7 +74,8 @@ const Index = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await fetch(`${BACKEND_URL}/auth/logout`, { credentials: "include" });
+    setUser(null);
     navigate("/login");
   };
 
@@ -88,13 +95,11 @@ const Index = () => {
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-glow shadow-sm">
             <Bot className="h-5 w-5 text-primary-foreground" />
           </div>
-          <div>
-            <span className="text-base font-semibold text-foreground tracking-tight">Chat Genius</span>
-          </div>
+          <span className="text-base font-semibold text-foreground tracking-tight">Chat Genius</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="hidden text-sm text-muted-foreground sm:inline">
-            {user?.email}
+            {user?.displayName || user?.email || "User"}
           </span>
           <Button
             onClick={handleLogout}
