@@ -1,27 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// ─── Points to Express backend for Google OAuth ───
+const BACKEND_URL = "http://localhost:5000";
+
 const LoginPage = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) navigate("/");
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) navigate("/");
-    });
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
-  const handleGoogleLogin = async () => {
-    await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
+  const handleGoogleLogin = () => {
+    // Redirect browser to Express Google OAuth route
+    window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
   return (
@@ -40,7 +26,7 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {/* Login Button */}
+        {/* Google Login Button */}
         <Button
           onClick={handleGoogleLogin}
           size="lg"
