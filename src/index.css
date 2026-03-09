@@ -2,44 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card: 210 20% 98%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 250 75% 58%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 221 83% 63%;
 
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 25% 10%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 250 75% 58%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 250 75% 58%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
-    --chat-user: 250 75% 58%;
+    --chat-user: 221 83% 53%;
     --chat-user-foreground: 0 0% 100%;
-    --chat-ai: 220 15% 94%;
-    --chat-ai-foreground: 220 25% 10%;
+    --chat-ai: 210 40% 96%;
+    --chat-ai-foreground: 222 47% 11%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -50,42 +51,43 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 
   .dark {
-    --background: 225 25% 8%;
-    --foreground: 220 15% 90%;
+    --background: 222 47% 6%;
+    --foreground: 210 40% 96%;
 
-    --card: 225 20% 12%;
-    --card-foreground: 220 15% 90%;
+    --card: 222 40% 10%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 225 20% 12%;
-    --popover-foreground: 220 15% 90%;
+    --popover: 222 40% 10%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 250 75% 62%;
+    --primary: 221 83% 58%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 221 83% 68%;
 
-    --secondary: 225 18% 16%;
-    --secondary-foreground: 220 15% 90%;
+    --secondary: 222 35% 15%;
+    --secondary-foreground: 210 40% 96%;
 
-    --muted: 225 18% 16%;
-    --muted-foreground: 220 10% 55%;
+    --muted: 222 35% 15%;
+    --muted-foreground: 215 20% 55%;
 
-    --accent: 250 75% 62%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 222 35% 15%;
+    --accent-foreground: 210 40% 96%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 18% 18%;
-    --input: 225 18% 18%;
-    --ring: 250 75% 62%;
+    --border: 222 30% 16%;
+    --input: 222 30% 16%;
+    --ring: 221 83% 58%;
 
-    --chat-user: 250 75% 62%;
+    --chat-user: 221 83% 58%;
     --chat-user-foreground: 0 0% 100%;
-    --chat-ai: 225 18% 16%;
-    --chat-ai-foreground: 220 15% 90%;
+    --chat-ai: 222 35% 14%;
+    --chat-ai-foreground: 210 40% 96%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -104,7 +106,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
@@ -116,7 +118,10 @@
     background: transparent;
   }
   .chat-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
+    background: hsl(var(--muted-foreground) / 0.2);
     border-radius: 3px;
+  }
+  .chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.35);
   }
 }

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
-import { Bot } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const LoginPage = () => {
@@ -25,21 +25,27 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-8 p-8">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-            <Bot className="h-7 w-7 text-primary-foreground" />
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="flex flex-col items-center gap-10 w-full max-w-sm">
+        {/* Logo & Title */}
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-glow shadow-lg shadow-primary/20">
+            <Sparkles className="h-7 w-7 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Lovable AI</h1>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">Chat Genius</h1>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              Your intelligent AI assistant.<br />Sign in to start chatting.
+            </p>
+          </div>
         </div>
-        <p className="max-w-sm text-center text-muted-foreground">
-          Your intelligent AI assistant. Sign in to start chatting.
-        </p>
+
+        {/* Login Button */}
         <Button
           onClick={handleGoogleLogin}
           size="lg"
-          className="flex items-center gap-3 rounded-xl bg-foreground px-8 py-6 text-base font-medium text-background hover:bg-foreground/90"
+          variant="outline"
+          className="w-full flex items-center justify-center gap-3 rounded-xl border-border bg-card px-6 py-6 text-sm font-medium text-foreground hover:bg-accent transition-all shadow-sm"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
@@ -49,6 +55,10 @@ const LoginPage = () => {
           </svg>
           Continue with Google
         </Button>
+
+        <p className="text-xs text-muted-foreground text-center">
+          By continuing, you agree to our Terms of Service.
+        </p>
       </div>
     </div>
   );
